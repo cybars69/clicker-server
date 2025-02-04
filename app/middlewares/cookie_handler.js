@@ -6,7 +6,11 @@ const cookie_middleware = async (req, res, next) => {
   let userId = req.cookies.userId;
   if (!userId) {
     userId = uuidv4();
-    res.cookie("userId", userId, { httpOnly: true, sameSite: "strict" });
+    res.cookie("userId", userId, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     const newUser = new User({ userId, score: 0, prizes: [] });
     await newUser.save();
   }
